@@ -1,18 +1,20 @@
-
+steps:
 - task: Maven@3
   inputs:
-    mavenPomFile: 'compelete/pom.xml'
+    mavenPomFile: 'complete/pom.xml'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    testRunTitle: 'JustTest'
-    codeCoverageToolOption: 'JaCoCo'
-    codeCoverageSourceDirectories: 'complete/src/'
+    codeCoverageToolOption: 'Cobertura'
+    codeCoverageFailIfEmpty: true
     javaHomeOption: 'JDKVersion'
     mavenVersionOption: 'Default'
     mavenAuthenticateFeed: false
     effectivePomSkip: false
-    sonarQubeRunAnalysis: true
-    sqMavenPluginVersionChoice: 'pom'
-    checkStyleRunAnalysis: true
-    pmdRunAnalysis: true
-    findBugsRunAnalysis: true
+    sonarQubeRunAnalysis: false
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
